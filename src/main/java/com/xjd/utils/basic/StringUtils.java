@@ -19,4 +19,19 @@ public abstract class StringUtils {
 		String trimStr = trim(str);
 		return trimStr == null || trimStr.length() == 0 ? null : trimStr;
 	}
+
+	public static boolean isEmpty(String str) {
+		return str == null || str.length() == 0;
+	}
+
+	public static boolean isBlank(String str) {
+		if (isEmpty(str)) return true;
+
+		for (int i = 0, len = str.length(); i < len; i++) {
+			if (str.charAt(i) != ' ') {
+				return false;
+			}
+		}
+		return true;
+	}
 }
