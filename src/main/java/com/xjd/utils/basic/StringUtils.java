@@ -17,14 +17,14 @@ public abstract class StringUtils {
 
 	public static String trimToEmpty(String str) {
 		String trimStr = trim(str);
-		return trimStr == null || trimStr.length() == 0 ? null : trimStr;
+		return trimStr == null ? "" : trimStr;
 	}
 
-	public static boolean isEmpty(String str) {
+	public static boolean isEmpty(CharSequence str) {
 		return str == null || str.length() == 0;
 	}
 
-	public static boolean isBlank(String str) {
+	public static boolean isBlank(CharSequence str) {
 		if (isEmpty(str)) return true;
 
 		for (int i = 0, len = str.length(); i < len; i++) {

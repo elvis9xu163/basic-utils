@@ -55,4 +55,10 @@ public abstract class AssertUtils {
 			throw new IllegalArgumentException(msg);
 		}
 	}
+
+	public static void assertArgumentNonBlank(CharSequence cs, String msg) {
+		if (StringUtils.isBlank(cs)) {
+			throw new IllegalArgumentException(msg);
+		}
+	}
 }
