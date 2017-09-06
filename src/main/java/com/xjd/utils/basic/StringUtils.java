@@ -34,4 +34,12 @@ public abstract class StringUtils {
 		}
 		return true;
 	}
+
+	public static String toLowerCase(String str) {
+		return str == null ? str : str.toLowerCase();
+	}
+
+	public static String toUpperCase(String str) {
+		return str == null ? str : str.toUpperCase();
+	}
 }
