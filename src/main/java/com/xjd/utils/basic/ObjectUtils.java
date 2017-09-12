@@ -32,6 +32,14 @@ public abstract class ObjectUtils {
 		return obj;
 	}
 
+	public static boolean isNull(Object obj) {
+		return obj == null;
+	}
+
+	public static boolean isNotNull(Object obj) {
+		return obj != null;
+	}
+
 	public static <T extends Comparable<? super T>> int compare(final T c1, final T c2) {
 		return compare(c1, c2, false);
 	}
