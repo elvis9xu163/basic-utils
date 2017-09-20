@@ -1,6 +1,10 @@
 package com.xjd.utils.basic;
 
+import java.lang.reflect.Array;
+import java.lang.reflect.Constructor;
 import java.util.Arrays;
+import java.util.concurrent.atomic.AtomicInteger;
+import java.util.concurrent.atomic.AtomicLong;
 import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.stream.Stream;
@@ -168,4 +172,59 @@ public abstract class StringUtils {
 
 	public static interface StringMapper extends Function<String, String> {}
 	public static interface StringFilter extends Predicate<String> {}
+
+	public static Long toLong(String str) {
+		return toNumber(str, Long.class);
+	}
+
+	public static Long[] toLong(String[] strArray) {
+		return toNumber(strArray, Long.class);
+	}
+
+	public static Integer toInteger(String str) {
+		return toNumber(str, Integer.class);
+	}
+
+	public static Integer[] toInteger(String[] strArray) {
+		return toNumber(strArray, Integer.class);
+	}
+
+	public static <T extends Number> T toNumber(String str, Class<T> clazz) {
+		str = trimToNull(str);
+		if (str == null) {
+			return null;
+		}
+
+		try {
+			// Float, Double, Long, Integer, Short, Byte, BigDecimal, BigInteger
+			Constructor<T> constructor = clazz.getConstructor(String.class);
+			return constructor.newInstance(str);
+		} catch (NoSuchMethodException e) {
+			// do-nothing
+
+		} catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+
+		// AtomicLong, AtomicInteger
+		if (AtomicLong.class.equals(clazz)) {
+			return (T) (new AtomicLong(Long.parseLong(str)));
+
+		} else if (AtomicInteger.class.equals(clazz)) {
+			return (T) (new AtomicInteger(Integer.parseInt(str)));
+
+		}
+		throw new IllegalArgumentException("not supported class '" + clazz + "'");
+	}
+
+	public static <T extends Number> T[] toNumber(String[] strArray, Class<T> clazz) {
+		if (strArray == null) {
+			return null;
+		}
+		T[] array = (T[]) Array.newInstance(clazz, strArray.length);
+		for (int i = 0; i < strArray.length; i++) {
+			array[i] = toNumber(strArray[i], clazz);
+		}
+		return array;
+	}
 }
