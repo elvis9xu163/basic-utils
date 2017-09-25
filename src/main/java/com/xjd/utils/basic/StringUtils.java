@@ -227,4 +227,73 @@ public abstract class StringUtils {
 		}
 		return array;
 	}
+
+	/**
+	 * <pre>
+	 * StringUtils.substr(null, *, *)    = null
+	 * StringUtils.substr("", * ,  *)    = "";
+	 * StringUtils.substr("abc", 0, 2)   = "ab"
+	 * StringUtils.substr("abc", 2, 0)   = ""
+	 * StringUtils.substr("abc", 2, 1)   = "c"
+	 * StringUtils.substr("abc", 2, 4)   = "c"
+	 * StringUtils.substr("abc", 4, 6)   = ""
+	 * StringUtils.substr("abc", 0, -1)   = ""
+	 * StringUtils.substr("abc", 2, -1)   = "b"
+	 * StringUtils.substr("abc", 2, -3)   = "ab"
+	 * StringUtils.substr("abc", 3, -1)   = "c"
+	 * StringUtils.substr("abc", 4, -1)   = ""
+	 * StringUtils.substr("abc", 4, -2)   = "c"
+	 * StringUtils.substr("abc", -2, -1) = "a"
+	 * StringUtils.substr("abc", -2, 1) = "b"
+	 * StringUtils.substr("abc", -4, 2)  = "a"
+	 * </pre>
+	 * @param str
+	 * @param start
+	 * @param len
+	 * @return
+	 */
+	public static String substr(String str, int start, int len) {
+		if (str == null || str.length() == 0) return str;
+		int end = start + len;
+		return substring(str, start, end);
+	}
+
+	/**
+	 * <pre>
+	 * StringUtils.substring(null, *, *)    = null
+	 * StringUtils.substring("", * ,  *)    = "";
+	 * StringUtils.substring("abc", 0, 2)   = "ab"
+	 * StringUtils.substring("abc", 2, 0)   = ""
+	 * StringUtils.substring("abc", 2, 4)   = "c"
+	 * StringUtils.substring("abc", 4, 6)   = ""
+	 * StringUtils.substring("abc", 2, 2)   = ""
+	 * StringUtils.substring("abc", -2, -1) = "b"
+	 * StringUtils.substring("abc", -4, 2)  = "ab"
+	 * </pre>
+	 * @param str
+	 * @param start
+	 * @param end
+	 * @return
+	 */
+	public static String substring(String str, int start, int end) {
+		if (str == null || str.length() == 0) return str;
+
+		// 负数处理
+		if (start < 0) start += str.length();
+		if (end < 0) end += str.length();
+
+		// 范围处理
+		if (start < 0) start = 0;
+		if (start > str.length()) start = str.length();
+		if (end < 0) end = 0;
+		if (end > str.length()) end = str.length();
+
+		// 先后处理
+		if (start > end) {
+			int tmp = start;
+			start = end;
+			end = tmp;
+		}
+		return str.substring(start, end);
+	}
 }
