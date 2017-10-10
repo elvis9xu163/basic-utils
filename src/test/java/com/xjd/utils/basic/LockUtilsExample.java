@@ -20,11 +20,15 @@ public class LockUtilsExample {
 		}
 
 		try (LockUtils.LockResource r = LockUtils.tryLock(readWriteLock.readLock())) {
-			System.out.println("tryLock");
+			if (r.isLocked()) {
+				System.out.println("tryLock");
+			}
 		}
 
 		try (LockUtils.LockResource r = LockUtils.tryLock(readWriteLock.readLock(), 1L, TimeUnit.SECONDS)) {
-			System.out.println("tryLock");
+			if (r.isLocked()) {
+				System.out.println("tryLock");
+			}
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
