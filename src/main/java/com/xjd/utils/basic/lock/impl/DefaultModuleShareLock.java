@@ -167,6 +167,8 @@ public class DefaultModuleShareLock implements ModuleShareLock {
 						} catch (InterruptedException e) {
 							if (interrupted) {
 								threadLockCountMap.remove(Thread.currentThread());
+								conditionInner.signalAll(); // 里面就通知
+								lockThread.interrupt(); // 外面就中断一下
 								throw e;
 							}
 						}
