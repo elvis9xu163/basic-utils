@@ -8,11 +8,11 @@ import com.xjd.utils.basic.lock.ABLock;
  * @author elvis.xu
  * @since 2017-10-13 09:59
  */
-public class DefaultABLock implements ABLock {
-	DefaultModuleShareLock moduleShareLock;
+public class ThreadABLock implements ABLock {
+	ThreadModulesLock moduleShareLock;
 
-	public DefaultABLock() {
-		moduleShareLock = new DefaultModuleShareLock(2);
+	public ThreadABLock() {
+		moduleShareLock = new ThreadModulesLock(2);
 	}
 
 	@Override

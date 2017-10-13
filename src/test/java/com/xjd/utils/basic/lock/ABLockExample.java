@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.Random;
 import java.util.concurrent.locks.Lock;
 
-import com.xjd.utils.basic.lock.impl.DefaultABLock;
+import com.xjd.utils.basic.lock.impl.StateABLock;
 
 /**
  * @author elvis.xu
@@ -13,7 +13,8 @@ import com.xjd.utils.basic.lock.impl.DefaultABLock;
  */
 public class ABLockExample {
 	public static void main(String[] args) throws InterruptedException {
-		final ABLock abLock = new DefaultABLock();
+//		final ABLock abLock = new ThreadABLock();
+		final ABLock abLock = new StateABLock();
 
 		List<LockThread> list =new ArrayList<>();
 		for (int i = 1; i <= 6; i++) {

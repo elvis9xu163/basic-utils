@@ -7,7 +7,7 @@ import java.util.concurrent.locks.Lock;
  * @author elvis.xu
  * @since 2017-10-13 11:30
  */
-public interface ModuleShareLock {
+public interface ModulesLock {
 
 	Lock moduleLock(int index);
 

@@ -8,17 +8,17 @@ import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
 import com.xjd.utils.basic.LockUtils;
-import com.xjd.utils.basic.lock.ModuleShareLock;
+import com.xjd.utils.basic.lock.ModulesLock;
 
 /**
  * @author elvis.xu
  * @since 2017-10-13 09:59
  */
-public class DefaultModuleShareLock implements ModuleShareLock {
+public class ThreadModulesLock implements ModulesLock {
 	ReentrantLock lock;
 	Locker[] moduleLocks;
 
-	public DefaultModuleShareLock(int count) {
+	public ThreadModulesLock(int count) {
 		lock = new ReentrantLock();
 		moduleLocks = new Locker[count];
 		for (int i = 0; i < count; i++) {

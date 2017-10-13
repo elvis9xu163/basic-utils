@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.locks.Lock;
 
-import com.xjd.utils.basic.lock.impl.DefaultABLock;
+import com.xjd.utils.basic.lock.impl.StateABLock;
 
 /**
  * @author elvis.xu
@@ -12,7 +12,8 @@ import com.xjd.utils.basic.lock.impl.DefaultABLock;
  */
 public class ABLockExample2 {
 	public static void main(String[] args) throws InterruptedException {
-		final ABLock abLock = new DefaultABLock();
+//		final ABLock abLock = new ThreadABLock();
+		final ABLock abLock = new StateABLock();
 
 		List<LockThread> list =new ArrayList<>();
 		for (int i = 1; i <= 6; i++) {
@@ -45,7 +46,19 @@ public class ABLockExample2 {
 		@Override
 		public void run() {
 
-			System.out.println(name + ": " + lock.tryLock());
+			boolean f = lock.tryLock();
+			if (f) {
+				System.out.println(name + ": locked");
+				try {
+					Thread.sleep(1000L);
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
+				lock.unlock();
+				System.out.println(name + ": unlocked");
+			} else {
+				System.out.println(name + ": lock fail");
+			}
 
 		}
 	}
