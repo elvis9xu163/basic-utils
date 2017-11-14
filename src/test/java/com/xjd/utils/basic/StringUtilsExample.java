@@ -12,7 +12,8 @@ import java.util.function.Predicate;
 public class StringUtilsExample {
 
 	public static void main(String[] args) {
-		stringArray();
+//		stringArray();
+		subString();
 	}
 
 	public static void stringArray() {
@@ -37,5 +38,15 @@ public class StringUtilsExample {
 		System.out.println("======StringUtils.trim...=======");
 		String[] ss3 = StringUtils.trimNull(StringUtils.trimElementToNull(splits));
 		System.out.println(Arrays.toString(ss3));
+	}
+
+	public static void subString() {
+		String s = "20170924171933111中国社会福利基金会免费午餐基金@maillist.sendcloud.org";
+
+		System.out.println(StringUtils.substr(s, 0, 25));
+		System.out.println(StringUtils.substr(s, 0, 100));
+		System.out.println(StringUtils.substr(s, -1, 100));
+		System.out.println(StringUtils.substr(s, -1, -10));
+		System.out.println(StringUtils.substring(s, -1, -10));
 	}
 }
