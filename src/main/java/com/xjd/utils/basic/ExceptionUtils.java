@@ -1,6 +1,8 @@
 package com.xjd.utils.basic;
 
 import java.io.IOException;
+import java.io.PrintWriter;
+import java.io.StringWriter;
 
 import com.xjd.utils.basic.exception.RuntimeIOException;
 
@@ -35,5 +37,13 @@ public abstract class ExceptionUtils {
 		}
 
 		throw new RuntimeException(t.getMessage(), t);
+	}
+
+	public static String printStackTrace(Throwable t) {
+		if (t == null) return null;
+
+		StringWriter writer = new StringWriter();
+		t.printStackTrace(new PrintWriter(writer));
+		return writer.toString();
 	}
 }
