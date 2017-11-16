@@ -31,4 +31,20 @@ public abstract class CollectionUtils {
 		}
 		vs.add(value);
 	}
+
+	public static boolean isEmpty(Collection<?> c) {
+		return c == null || c.isEmpty();
+	}
+
+	public static boolean isEmpty(Map<?, ?> m) {
+		return m == null || m.isEmpty();
+	}
+
+	public static <T> Collection<T> emptyToNull(Collection<T> c) {
+		return isEmpty(c) ? null : c;
+	}
+
+	public static <K, V> Map<K, V> emptyToNull(Map<K, V> m) {
+		return isEmpty(m) ? null : m;
+	}
 }
