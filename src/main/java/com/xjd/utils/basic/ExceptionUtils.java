@@ -1,10 +1,7 @@
 package com.xjd.utils.basic;
 
-import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.StringWriter;
-
-import com.xjd.utils.basic.exception.RuntimeIOException;
 
 /**
  * @author elvis.xu
@@ -18,11 +15,7 @@ public abstract class ExceptionUtils {
 			return (RuntimeException) e;
 		}
 
-		if (e instanceof IOException) {
-			return new RuntimeIOException((IOException) e);
-		}
-
-		return new RuntimeException(e.getMessage(), e);
+		return new WrappedRuntimeException(e);
 	}
 
 	public static void throwRuntime(Throwable t) {
@@ -32,11 +25,7 @@ public abstract class ExceptionUtils {
 			throw (Error) t;
 		}
 
-		if (t instanceof Exception) {
-			throw runtime((Exception) t);
-		}
-
-		throw new RuntimeException(t.getMessage(), t);
+		throw runtime((Exception) t);
 	}
 
 	public static String printStackTrace(Throwable t) {
@@ -45,5 +34,11 @@ public abstract class ExceptionUtils {
 		StringWriter writer = new StringWriter();
 		t.printStackTrace(new PrintWriter(writer));
 		return writer.toString();
+	}
+
+	public static class WrappedRuntimeException extends RuntimeException {
+		public WrappedRuntimeException(Throwable cause) {
+			super("wrapped runtime exception for " + cause.getClass(), cause);
+		}
 	}
 }
