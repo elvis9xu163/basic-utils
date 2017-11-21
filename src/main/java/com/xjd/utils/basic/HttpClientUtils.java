@@ -120,9 +120,9 @@ public abstract class HttpClientUtils {
 					.setContentType(ContentType.MULTIPART_FORM_DATA.withCharset(charset));// 解决中文乱码推荐UTF8
 
 			if (params != null && !params.isEmpty()) {
-				params.forEach(p -> {
-					builder.addTextBody(p.getName(), p.getValue());
-				});
+				for (NameValuePair p : params) {
+					builder.addTextBody(p.getName(), p.getValue(), ContentType.DEFAULT_TEXT.withCharset(charset));
+				}
 			}
 
 			if (multiData != null && !multiData.isEmpty()) {
