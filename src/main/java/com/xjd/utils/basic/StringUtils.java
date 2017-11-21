@@ -60,6 +60,12 @@ public abstract class StringUtils {
 		return str == null ? str : str.toUpperCase();
 	}
 
+	public static boolean isEqual(String str1, String str2) {
+		if (str1 == str2) return true;
+		if (str1 == null || str2 == null) return false;
+		return str1.equals(str2);
+	}
+
 	public static String[] split(String txt, String regex) {
 		if (txt == null) return new String[0];
 		return txt.split(regex, -1); // 默认使用-1
