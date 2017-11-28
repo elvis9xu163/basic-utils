@@ -15,7 +15,8 @@ public class HttpClientUtilsExample {
 	public static void main(String[] args) {
 //		get();
 //		formPost();
-		multipartFormPost();
+//		multipartFormPost();
+		postJson();
 	}
 
 	public static void get() {
@@ -48,7 +49,9 @@ public class HttpClientUtilsExample {
 	}
 
 	public static void postJson() {
-
+		HttpClientUtils.setDefaultHttpClientWithTrustAllSSL();
+		HttpResponse post = HttpClientUtils.post("https://api.wozai4u.com/manage/resource/api/verifycode", null);
+		System.out.println(HttpClientUtils.responseToString(post));
 	}
 
 	public static void postText() {

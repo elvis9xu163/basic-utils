@@ -2,8 +2,13 @@ package com.xjd.utils.basic;
 
 import java.io.IOException;
 import java.nio.charset.Charset;
+import java.security.cert.CertificateException;
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.net.ssl.SSLContext;
+import javax.net.ssl.TrustManager;
+import javax.net.ssl.X509TrustManager;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -32,6 +37,58 @@ public abstract class HttpClientUtils {
 	public static Charset DEFAULT_CHARSET = Charset.forName("UTF-8");
 	public static HttpClient DEFAULT_HTTP_CLIENT = HttpClients.createDefault();
 
+	public static Charset getDefaultCharset() {
+		return DEFAULT_CHARSET;
+	}
+
+	public static void setDefaultCharset(Charset defaultCharset) {
+		DEFAULT_CHARSET = defaultCharset;
+	}
+
+	public static HttpClient getDefaultHttpClient() {
+		return DEFAULT_HTTP_CLIENT;
+	}
+
+	public static void setDefaultHttpClient(HttpClient defaultHttpClient) {
+		DEFAULT_HTTP_CLIENT = defaultHttpClient;
+	}
+
+	public static void setDefaultHttpClientWithTrustAllSSL() {
+		DEFAULT_HTTP_CLIENT = createHttpClientWithTrustAllSSL();
+	}
+
+	public static HttpClient createHttpClientWithTrustAllSSL() {
+		try {
+			SSLContext sc = SSLContext.getInstance("SSLv3");
+
+			// 实现一个X509TrustManager接口，用于绕过验证，不用修改里面的方法
+			X509TrustManager trustManager = new X509TrustManager() {
+				@Override
+				public void checkClientTrusted(
+						java.security.cert.X509Certificate[] paramArrayOfX509Certificate,
+						String paramString) throws CertificateException {
+				}
+
+				@Override
+				public void checkServerTrusted(
+						java.security.cert.X509Certificate[] paramArrayOfX509Certificate,
+						String paramString) throws CertificateException {
+				}
+
+				@Override
+				public java.security.cert.X509Certificate[] getAcceptedIssuers() {
+					return null;
+				}
+			};
+
+			sc.init(null, new TrustManager[]{trustManager}, null);
+
+			return HttpClients.custom().setSSLContext(sc).build();
+		} catch (Exception e) {
+			ExceptionUtils.throwRuntime(e);
+		}
+		return null;
+	}
 
 	public static HttpResponse get(String url, List<NameValuePair> params) {
 		return get(url, params, null);
